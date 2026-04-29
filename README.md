@@ -23,10 +23,19 @@ npx vibelogic-mcp
 打开 Cursor Settings -> Features -> MCP。
 点击 + Add New MCP Server。
 设置如下：
-
-Name: VibeLogic
-Type: command
-Command: npx vibelogic-mcp
+```
+{
+  "mcpServers": {
+    "VibeLogic": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "vibelogic-mcp@latest"
+      ]
+    }
+  }
+}
+```
 
 ## 💡 常用咒语 (Prompts)
 
