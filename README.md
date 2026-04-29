@@ -28,13 +28,13 @@ Name: VibeLogic
 Type: command
 Command: npx vibelogic-mcp
 
-# 💡 常用咒语 (Prompts)
+## 💡 常用咒语 (Prompts)
 
 "帮我分析下这个功能的逻辑，我想看图。"
 "我要重构登录模块的校验流程，先出图和施工单。"
 "基于当前代码，审计一下新增 API 对现有架构的影响。"
 
-# 🔒 隐私与安全
+## 🔒 隐私与安全
 
 BYOK (自带 Key)：VibeLogic 运行在你的本地环境，不存储任何代码，完全复用你 Cursor 选定的模型能力。
 拒绝复杂化：仅在涉及核心逻辑变动时激活，不干扰常规的 UI 调整和 Bug 修复。
