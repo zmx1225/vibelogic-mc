@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
@@ -22,18 +23,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             intent: {
               type: "string",
               enum: ["view", "modify"],
-              description: "用户意图：'view' 表示仅查看架构图或项目逻辑，'modify' 表示项目逻辑变动或重构。"
-            },
-            requirement: {
-              type: "string",
-              description: "用户的原始需求描述。"
-            },
-            files_context: {
-              type: "string",
-              description: "相关文件的路径及关键代码摘要。"
+              description: "用户意图：'view' 表示仅查看，'modify' 表示重构。"
             }
           },
-          required: ["intent", "requirement", "files_context"]
+          required: ["intent"]
         }
       }
     ]
@@ -48,10 +41,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
   const args = request.params.arguments;
   const intent = args?.intent as "view" | "modify";
-  const requirement = args?.requirement as string;
-  const files_context = args?.files_context as string;
 
-  if (!intent || !requirement || !files_context) {
+  if (!intent) {
     throw new Error("Missing required arguments.");
   }
 
@@ -61,23 +52,18 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const target_file = `vibelogic-plans/arch-${timestamp}.md`;
 
   let finalPrompt = `
-你现在的任务是：将审计结果导出为文件。
+你已成功触发 VibeLogic 架构审计引擎。
+请立即结合你当前工作区已读取的业务代码和用户需求，执行架构分析任务。
 
-【目标文件】
+【目标导出文件】
 ${target_file}
 
-【原始需求】
-${requirement}
-
-【代码上下文】
-${files_context}
-
-【出图规范】
+【出图规范与约束（必须严格遵守）】
 ${MERMAID_VISUAL_PROTOCOL}
 `;
 
   if (intent === "modify" || intent === "view") {
-    finalPrompt += LOGIC_CHANGE_SOP.replace("${target_file}", target_file);
+    finalPrompt += `\n【文件导出与执行规范】\n` + LOGIC_CHANGE_SOP.replace("${target_file}", target_file);
   }
 
   return {
