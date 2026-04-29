@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "VibeLogic": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "vibelogic-mcp@latest"
+      ]
+    }
+  }
+}
