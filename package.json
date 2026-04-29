@@ -1,11 +1,11 @@
 {
-  "name": "0.1.0-mcp",
-  "version": "1.0.0",
+  "name": "vibelogic-mcp",
+  "version": "1.0.4",
   "description": "",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "vibelogic-mcp": "./dist/index.js"
+    "vibelogic-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
